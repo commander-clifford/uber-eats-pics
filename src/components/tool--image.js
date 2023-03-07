@@ -1,6 +1,6 @@
-import { h, Component } from 'preact';
+import { Component } from 'react';
 
-import ContentAPI from '../API';
+// import ContentAPI from '../API';
 
 // images processors
 import mergeImages from 'merge-images'; // https://www.npmjs.com/package/merge-images
@@ -12,38 +12,72 @@ import FileSaver from 'file-saver'; // https://github.com/eligrey/FileSaver.js
 import DropToUpload from 'react-drop-to-upload'; // https://www.npmjs.com/package/react-drop-to-upload
 
 // Material UI - http://www.material-ui.com/#/ && https://material-ui.com/
-import AppBar from 'material-ui/AppBar';
-import Avatar from 'material-ui/Avatar';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import MenuIcon from 'material-ui/Menu';
-import { FormControlLabel, FormGroup } from 'material-ui/Form';
-import Menu, { MenuItem, MenuList } from 'material-ui/Menu';
-import { ArrowDropDown, Close, MoreVert, LockOpen, LockOutline, CropRotate, GridOn, GridOff, AttachFile, Attachment, Wallpaper, PlaylistAddCheck, ArtTrack, PermMedia, Edit, BrandingWatermark, FileDownload, FileUpload, FeaturedPlayList } from 'material-ui-icons';
-import Card, { CardHeader, CardMedia, CardContent, CardActions } from 'material-ui/Card';
-import Dialog from 'material-ui/Dialog';
-import Popover from 'material-ui/Popover';
-import Divider from 'material-ui/Divider';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
+import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
+import {
+  Toolbar,
+  ToolbarGroup,
+  ToolbarSeparator,
+  ToolbarTitle
+} from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import MenuIcon from '@material-ui/core/Menu';
+// import { FormControlLabel, FormGroup } from '@material-ui/core/Form';
+import Menu,
+{ 
+  MenuItem,
+  MenuList 
+} from '@material-ui/core/Menu';
+import { 
+  ArrowDropDown,
+  Close,
+  MoreVert,
+  LockOpen,
+  LockOutline,
+  CropRotate,
+  GridOn,
+  GridOff,
+  AttachFile,
+  Attachment,
+  Wallpaper,
+  PlaylistAddCheck,
+  ArtTrack,
+  PermMedia,
+  Edit,
+  BrandingWatermark,
+  FileDownload,
+  FileUpload,
+  FeaturedPlayList } from '@material-ui/icons';
+import 
+  Card,
+  { 
+    CardHeader,
+    CardMedia,
+    CardContent,
+    CardActions 
+  } from '@material-ui/core/Card';
+import Dialog from '@material-ui/core/Dialog';
+import Popover from '@material-ui/core/Popover';
+import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Grow from 'material-ui/transitions/Grow';
-import Paper from 'material-ui/Paper';
-import { withStyles } from 'material-ui/styles';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 import { Manager, Target, Popper } from 'react-popper';
-import ClickAwayListener from 'material-ui/utils/ClickAwayListener';
-import Slide from 'material-ui/transitions/Slide';
-import Tooltip from 'material-ui/Tooltip';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Slide from '@material-ui/core/Slide';
+import Tooltip from '@material-ui/core/Tooltip';
 import Slider from 'rc-slider'; // https://www.npmjs.com/package/rc-slider
-
-import ExpansionPanel, {
+import 
+  ExpansionPanel, {
   ExpansionPanelDetails,
   ExpansionPanelSummary,
   ExpansionPanelActions
-} from 'material-ui/ExpansionPanel';
-
-
+} from '@material-ui/core/ExpansionPanel';
+import FlavorData from './image_flavors.json';
 
 export default class ImageTool extends Component {
 
@@ -51,18 +85,27 @@ export default class ImageTool extends Component {
 
     super(props);
 
-    const { imageFlavors } = props;
+    // const { imageFlavors } = props;
+    // const contentfulImageFlavors = imageFlavors ? imageFlavors : null;
 
-    const contentfulImageFlavors = imageFlavors ? imageFlavors : null;
+      console.log(FlavorData);
+    // this.state.imageFlavors = FlavorData;
+
+
+
+  }
+
+  componentDidMount(props) {
 
     this.setState({
 
       // predetermined flavors
-      imageFlavors: require('../image_flavors.json'),
+      // imageFlavors: require('./image_flavors.json'),
+      imageFlavors: FlavorData,
 
       // defaults // TODO save these to local storage for user
       imageType: 'jpg',
-      imageFormat: 'image/' + this.state.imageType,
+      imageFormat: 'image/' + this.imageType,
       globalOverlay: 'matcha',
       useLongFileName: false,
 
@@ -97,8 +140,10 @@ export default class ImageTool extends Component {
 
     });
 
+   
+
     // if Contenful JSON, use it instead
-    this.state.imageFlavors = contentfulImageFlavors ? contentfulImageFlavors : this.state.imageFlavors;
+    // this.state.imageFlavors = contentfulImageFlavors ? contentfulImageFlavors : this.state.imageFlavors;
 
     // add flavor settings that aren't yet unique
     this.state.imageFlavors.map((imageFlavor, i) => {
@@ -114,9 +159,7 @@ export default class ImageTool extends Component {
 
     });
 
-  }
-
-  componentDidMount(props) {
+  
 
     this.state.imageFlavors.map((imageFlavor, i) => {
 
